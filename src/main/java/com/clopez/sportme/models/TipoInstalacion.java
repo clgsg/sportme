@@ -7,10 +7,14 @@ import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToMany;
 
 @Entity
-@Table(name = "tipos_instalacion")
+@Table(name = "TIPOS_INSTALACION")
+@NamedNativeQuery(
+	name="TIPOS_INSTALACION.getTipoInstalacion",
+	query = "select tipo from TIPOS_INSTALACION where id_tipo=:idTipoInstalacion;")
 public class TipoInstalacion implements Serializable {
 
 	private static final long serialVersionUID = -4229732694376342854L;
@@ -19,7 +23,7 @@ public class TipoInstalacion implements Serializable {
 	@Column(name = "id_tipo")
 	private int idTipo;
 
-	@Column(name = "tipoInstalacion")
+	@Column(name = "tipo")
 	private Instalacion tipoInstalacion;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoInstalacion")

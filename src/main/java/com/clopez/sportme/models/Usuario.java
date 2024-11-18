@@ -11,13 +11,54 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "USUARIOS")
+@NamedNativeQueries({
+    @NamedNativeQuery(
+        name="getApodoById",
+        query ="SELECT apodo from USUARIOS where ID_USUARIO= :idUsuario;"
+    ),
+    @NamedNativeQuery(
+        name="getUserFirstNameById",
+        query="select u.nombre from USUARIOS u "
+        + " where u.ID_USUARIO= :idUsuario; "
+    ),
+    @NamedNativeQuery(
+        name="getUsersByType",
+        query="select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
+            + " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+            + " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+            + " where d.deporte = :deporte  "
+            + " and a.FECHA > SYSDATE; "
+    ),
+    @NamedNativeQuery(
+        name="getMailByApodo",
+        query = "select c.correo from CORREOS c "
+            + " where c.FK_USUARIO = (select id_usuario from USUARIOS where apodo= LOWER(:apodo)); "
+    ),
+    @NamedNativeQuery(
+        name="getMailById",
+        query = "select c.correo from CORREOS c "
+            + " where c.FK_USUARIO = :id; "
+    ),
+    @NamedNativeQuery(
+        name="getUsersCreatedByUser",
+        query= "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  " 
+        + "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE " 
+        + "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION " 
+        + "where a.fk_usuario = :idUsuario "
+        + "or a.fk_usuario= (select id_usuario from usuarios where apodo = :apodo) "
+        + "and a.FECHA > SYSDATE; "
+    )
+    }
+)
 public class Usuario implements Serializable {
     private static final long serialVersionUID = -6567297177530353288L;
 
@@ -43,10 +84,10 @@ public class Usuario implements Serializable {
     // @JoinColumn(name="id_correo", referencedColumnName = "id_usuario")
     private Correo correo;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "creador")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creador")
     private List<Actividad> actividadesCreadas = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "participantes")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "participantes")
     private List<Actividad> actividadesParticipante = new ArrayList<>();
 
     public Usuario() {
@@ -62,6 +103,19 @@ public class Usuario implements Serializable {
         this.correo = correo;
     }
 
+    
+    // Constructor with all possible arguments
+    public Usuario(int idUsuario, String apodo, String nombre, String primerApellido, String segundoApellido,
+            Correo correo, List<Actividad> actividadesCreadas, List<Actividad> actividadesParticipante) {
+        this.idUsuario = idUsuario;
+        this.apodo = apodo;
+        this.nombre = nombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.correo = correo;
+        this.actividadesCreadas = actividadesCreadas;
+        this.actividadesParticipante = actividadesParticipante;
+    }
 
     public static long getSerialversionuid() {
         return serialVersionUID;

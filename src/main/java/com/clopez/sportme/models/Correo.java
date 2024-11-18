@@ -8,12 +8,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "correo")
+@Table(name = "CORREOS")
+@NamedNativeQueries({
+		@NamedNativeQuery(
+			name = "Correos.getCorreoByUserIdOrNick",
+			query = "select c.correo \r\n" + //
+						"from CORREOS c\r\n" + //
+						"where c.fk_usuario = :idUsuario;"),
+		@NamedNativeQuery(
+			name = "Correos.addCorreoUsuario", 
+			query = "insert into CORREOS (fk_usuario, correo) values (:idUsuario, :correo); "),
+		@NamedNativeQuery(
+			name = "Correos.updateCorreoUsuario", 
+			query = "update CORREOS\r\n" + //
+								"set correo = :nuevoCorreo\r\n" + //
+								"where fk_usuario=:id_usuario; ")
+})
 public class Correo implements Serializable {
 
 	private static final long serialVersionUID = 4923736685549730810L;

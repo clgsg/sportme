@@ -10,11 +10,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "instalaciones")
+@Table(name = "INSTALACIONES")
+@NamedNativeQueries({
+@NamedNativeQuery(
+	name="Instalaciones.getAllInstalaciones",
+	query = "select nombre from instalaciones;"
+),
+@NamedNativeQuery(
+	name="Instalaciones.getDireccionInstalaciones",
+	query = "select nombre from instalaciones;"
+)
+})
 public class Instalacion implements Serializable {
 
 	private static final long serialVersionUID = -8806477198938244169L;

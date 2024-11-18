@@ -83,3 +83,26 @@ from usuarios u
 join PARTICIPANTES p on p.FK_USUARIO= u.ID_USUARIO
 join ACTIVIDADES a on a.ID_ACTIVIDAD = p.FK_ACTIVIDAD
 where a.ID_ACTIVIDAD = :idActividad;
+
+
+--- getCorreoByUserIdOrNick
+select c.correo 
+from CORREOS c
+where c.fk_usuario = :idUsuario;
+-- updateCorreoUsuario
+update CORREOS
+set correo = :nuevoCorreo
+where fk_usuario=:id_usuario;
+
+-- addCorreoUsuario
+insert into CORREOS (fk_usuario, correo)
+values (:idUsuario, :correo);
+
+
+
+---- getDireccionInstalaciones
+select i.TIPO_VIA, i.NOMBRE_VIA, i.NUM_VIA
+from INSTALACIONES i where i.ID_INSTALACION=:idInstalacion;
+
+
+select tipo from TIPOS_INSTALACION where id_tipo=:idTipoInstalacion;

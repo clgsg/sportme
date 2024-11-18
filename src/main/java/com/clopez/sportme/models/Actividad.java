@@ -6,9 +6,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -23,7 +25,45 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "actividades")
+@Table(name = "ACTIVIDADES")
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "Actividades.getAllActivities", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+				+ "and a.FECHA > SYSDATE; "),
+		@NamedNativeQuery(name = "Actividades.getActivitiesByTypeAndDate", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE"
+				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION"
+				+ "where d.deporte = :deporte and a.fecha= :fecha  "
+				+ "and a.FECHA > SYSDATE; "),
+		@NamedNativeQuery(name = "Actividades.getActivitiesByType", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
+				+ " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+				+ " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+				+ " where d.deporte = :deporte  "
+				+ " and a.FECHA > SYSDATE; "),
+		@NamedNativeQuery(name = "Actividades.getActivitiesByDate", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+				+ " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+				+ " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+				+ "  where a.fecha= :fecha;"),
+		@NamedNativeQuery(name = "Actividades.getActivitiesCreatedByUser", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
+				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+				+ "where a.fk_usuario = :idUsuario "
+				+ "or a.fk_usuario= (select id_usuario from usuarios where apodo = :apodo) "
+				+ "and a.FECHA > SYSDATE; "),
+		@NamedNativeQuery(name = "Actividades.getParticipantNicks", query = "select u.APODO from usuarios u "
+				+ "join PARTICIPANTES p on p.FK_USUARIO= u.ID_USUARIO "
+				+ "join ACTIVIDADES a on a.ID_ACTIVIDAD = p.FK_ACTIVIDAD "
+				+ "where a.ID_ACTIVIDAD = :idActividad;"),
+		@NamedNativeQuery(name = "Actividades.countParticipantsByActivityId", query = "select COUNT(*)\r\n" + //
+				"from usuarios u\r\n" + //
+				"join PARTICIPANTES p on p.FK_USUARIO= u.ID_USUARIO\r\n" + //
+				"join ACTIVIDADES a on a.ID_ACTIVIDAD = p.FK_ACTIVIDAD\r\n" + //
+				"group by a.ID_ACTIVIDAD\r\n" + //
+				"having a.ID_ACTIVIDAD = :idActividad;"),
+		@NamedNativeQuery(name = "Actividades.newActivity", query = "INSERT INTO ACTIVIDADES "
+				+ " SET DEPORTE_FK")
+})
 public class Actividad implements Serializable {
 	private static final long serialVersionUID = -6567297175530353288L;
 
@@ -33,13 +73,13 @@ public class Actividad implements Serializable {
 	@Column(name = "id_actividad")
 	private int idActividad;
 
-	@Column(name = "fk_usuario")
+	@Column(name = "fk_usuario", nullable = false)
 	private int usuarioCreadorFk; // Creador de la actividad
 
-	@Column(name = "fk_deporte")
+	@Column(name = "fk_deporte", nullable = false)
 	private int deporteFk;
 
-	@Column(name = "fk_instalacion")
+	@Column(name = "fk_instalacion", nullable = false)
 	private int instalacionFk;
 
 	@Column(name = "min_participantes")
@@ -52,11 +92,11 @@ public class Actividad implements Serializable {
 	@Size(max = 400)
 	private String comentarios;
 
-	@Column(name = "fecha")
+	@Column(name = "fecha", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date fechaActividad;
 
-	@Column(name = "fecha")
+	@Column(name = "fecha", nullable = false)
 	@Temporal(TemporalType.TIME)
 	private Time horaActividad;
 
@@ -72,13 +112,16 @@ public class Actividad implements Serializable {
 	@JoinColumn(name = "id_usuario")
 	private Usuario creador;
 
-	@ManyToMany
-	@JoinTable(name = "participantes", joinColumns = @JoinColumn(name = "fk_actividad"), inverseJoinColumns = @JoinColumn(name = "fk_usuario"))
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "PARTICIPANTES", 
+		joinColumns = @JoinColumn(name = "fk_actividad"), 
+		inverseJoinColumns = @JoinColumn(name = "fk_usuario"))
 	private List<Usuario> participantes = new ArrayList<>();
 
 	public Actividad() {
 	}
 
+	// Constructor with all possible arguments
 	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, int minParticipantes,
 			int maxParticipantes, @Size(max = 400) String comentarios, Date fechaActividad, Time horaActividad,
 			Instalacion instalacion, Deporte deporte, Usuario creador) {
@@ -96,9 +139,30 @@ public class Actividad implements Serializable {
 		this.creador = creador;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	// Constructor with only mandatory arguments
+	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, Date fechaActividad,
+			Time horaActividad) {
+		this.idActividad = idActividad;
+		this.usuarioCreadorFk = usuarioCreadorFk;
+		this.deporteFk = deporteFk;
+		this.instalacionFk = instalacionFk;
+		this.fechaActividad = fechaActividad;
+		this.horaActividad = horaActividad;
 	}
+
+	// Constructor with mandatory arguments + no.participants
+	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, int minParticipantes,
+		int maxParticipantes, Date fechaActividad, Time horaActividad) {
+			this.idActividad = idActividad;
+			this.usuarioCreadorFk = usuarioCreadorFk;
+			this.deporteFk = deporteFk;
+			this.instalacionFk = instalacionFk;
+			this.minParticipantes = minParticipantes;
+			this.maxParticipantes = maxParticipantes;
+			this.fechaActividad = fechaActividad;
+			this.horaActividad = horaActividad;
+		}
+	
 
 	public int getIdActividad() {
 		return idActividad;
