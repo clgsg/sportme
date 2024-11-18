@@ -8,15 +8,21 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQueries;
 import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "DEPORTES")
-@NamedNativeQuery(
-	name="Deportes.getAllDeportes",
-	query="select d.deporte from DEPORTES d;")
+@NamedNativeQueries({
+		@NamedNativeQuery(
+			name = "Deportes.getAllDeportes", 
+			query = "select d.deporte from DEPORTES d;"),
+		@NamedNativeQuery(
+			name = "Deportes.getDeporteById", 
+			query = "select d.deporte from DEPORTES d;")
+})
 public class Deporte implements Serializable {
 	private static final long serialVersionUID = -6567297175530353289L;
 
@@ -53,11 +59,11 @@ public class Deporte implements Serializable {
 		this.deporte = deporte;
 	}
 
-	public List<Actividad> getActividades(){
+	public List<Actividad> getActividades() {
 		return actividades;
 	}
 
-	public void addActividad(Actividad actividad){
+	public void addActividad(Actividad actividad) {
 		this.actividades.add(actividad);
 	}
 

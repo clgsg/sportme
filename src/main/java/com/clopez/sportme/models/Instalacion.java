@@ -23,8 +23,9 @@ import jakarta.persistence.Table;
 	query = "select nombre from instalaciones;"
 ),
 @NamedNativeQuery(
-	name="Instalaciones.getDireccionInstalaciones",
-	query = "select nombre from instalaciones;"
+	name="Instalaciones.getDireccionInstalacion",
+	query = "sselect i.TIPO_VIA, i.NOMBRE_VIA, i.NUM_VIA\r\n" + //
+				"from INSTALACIONES i where i.ID_INSTALACION=:idInstalacion;"
 )
 })
 public class Instalacion implements Serializable {

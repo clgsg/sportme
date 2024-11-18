@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Table(name = "CORREOS")
 @NamedNativeQueries({
 		@NamedNativeQuery(
-			name = "Correos.getCorreoByUserIdOrNick",
+			name = "Correos.getCorreoByIdUsuario",
 			query = "select c.correo \r\n" + //
 						"from CORREOS c\r\n" + //
 						"where c.fk_usuario = :idUsuario;"),
@@ -29,7 +29,7 @@ import jakarta.persistence.Table;
 			name = "Correos.updateCorreoUsuario", 
 			query = "update CORREOS\r\n" + //
 								"set correo = :nuevoCorreo\r\n" + //
-								"where fk_usuario=:id_usuario; ")
+								"where fk_usuario=:idUsuario; ")
 })
 public class Correo implements Serializable {
 

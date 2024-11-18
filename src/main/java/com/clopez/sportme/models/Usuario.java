@@ -22,40 +22,37 @@ import jakarta.persistence.Table;
 @Table(name = "USUARIOS")
 @NamedNativeQueries({
     @NamedNativeQuery(
-        name="getApodoById",
+        name="Usuarios.getDataUsuarioById",
+        query ="select u.apodo, u.nombre, u.apellido1, u.apellido2, c.correo from USUARIOS U \r\n" + //
+                        "join CORREOS c on c.fk_usuario = u.id_usuario\r\n" + //
+                        "where u.id_usuario = :idUsuario;"
+    ),
+    @NamedNativeQuery(
+        name="Usuarios.getApodoByIdUsuario",
         query ="SELECT apodo from USUARIOS where ID_USUARIO= :idUsuario;"
     ),
     @NamedNativeQuery(
-        name="getUserFirstNameById",
+        name="Usuarios.newUsuario",
+        query="INSERT INTO USUARIOS (apodo, nombre, APELLIDO1, APELLIDO2) "
+            + "VALUES (:apodo, :nombre, :apellido1, :apellido2); "
+    ),
+    @NamedNativeQuery(
+        name="Usuarios.getUserNameById",
         query="select u.nombre from USUARIOS u "
         + " where u.ID_USUARIO= :idUsuario; "
     ),
     @NamedNativeQuery(
-        name="getUsersByType",
-        query="select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
-            + " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
-            + " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
-            + " where d.deporte = :deporte  "
-            + " and a.FECHA > SYSDATE; "
-    ),
-    @NamedNativeQuery(
-        name="getMailByApodo",
-        query = "select c.correo from CORREOS c "
-            + " where c.FK_USUARIO = (select id_usuario from USUARIOS where apodo= LOWER(:apodo)); "
-    ),
-    @NamedNativeQuery(
-        name="getMailById",
-        query = "select c.correo from CORREOS c "
-            + " where c.FK_USUARIO = :id; "
-    ),
-    @NamedNativeQuery(
-        name="getUsersCreatedByUser",
+        name="Usuarios.getActividadesCreatedByUsuario",
         query= "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  " 
         + "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE " 
         + "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION " 
         + "where a.fk_usuario = :idUsuario "
         + "or a.fk_usuario= (select id_usuario from usuarios where apodo = :apodo) "
         + "and a.FECHA > SYSDATE; "
+    ),
+    @NamedNativeQuery(
+        name="removeUsuario",
+        query="delete from USUARIOS where id_usuario = :idUsuario;"
     )
     }
 )

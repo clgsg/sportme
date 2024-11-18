@@ -27,42 +27,70 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "ACTIVIDADES")
 @NamedNativeQueries({
-		@NamedNativeQuery(name = "Actividades.getAllActivities", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+		@NamedNativeQuery(
+				name = "Actividades.getActividadById", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
 				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
 				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
-				+ "and a.FECHA > SYSDATE; "),
-		@NamedNativeQuery(name = "Actividades.getActivitiesByTypeAndDate", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+				+ "WHERE a.id_actividad = :idActividad AND a.FECHA > SYSDATE; "),
+		@NamedNativeQuery(
+				name = "Actividades.getAllActividades", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+				+ "WHERE a.FECHA > SYSDATE; "),
+		@NamedNativeQuery(
+				name = "Actividades.getActividadesByTypeAndDate", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
 				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE"
 				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION"
 				+ "where d.deporte = :deporte and a.fecha= :fecha  "
 				+ "and a.FECHA > SYSDATE; "),
-		@NamedNativeQuery(name = "Actividades.getActivitiesByType", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
+		@NamedNativeQuery(
+				name = "Actividades.getActividadesByType", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
 				+ " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
 				+ " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
 				+ " where d.deporte = :deporte  "
 				+ " and a.FECHA > SYSDATE; "),
-		@NamedNativeQuery(name = "Actividades.getActivitiesByDate", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
+		@NamedNativeQuery(
+				name = "Actividades.getActividadesByDate", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a "
 				+ " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
 				+ " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
 				+ "  where a.fecha= :fecha;"),
-		@NamedNativeQuery(name = "Actividades.getActivitiesCreatedByUser", query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
+		@NamedNativeQuery(
+				name = "Actividades.getActividadesCreatedByUser", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE from ACTIVIDADES a  "
 				+ "JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
 				+ "join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
 				+ "where a.fk_usuario = :idUsuario "
 				+ "or a.fk_usuario= (select id_usuario from usuarios where apodo = :apodo) "
 				+ "and a.FECHA > SYSDATE; "),
-		@NamedNativeQuery(name = "Actividades.getParticipantNicks", query = "select u.APODO from usuarios u "
+		@NamedNativeQuery(
+				name = "Actividades.getParticipantNicks", 
+				query = "select u.APODO from usuarios u "
 				+ "join PARTICIPANTES p on p.FK_USUARIO= u.ID_USUARIO "
 				+ "join ACTIVIDADES a on a.ID_ACTIVIDAD = p.FK_ACTIVIDAD "
 				+ "where a.ID_ACTIVIDAD = :idActividad;"),
-		@NamedNativeQuery(name = "Actividades.countParticipantsByActivityId", query = "select COUNT(*)\r\n" + //
+		@NamedNativeQuery(
+				name = "Actividades.countParticipantsByIdActividad", 
+				query = "select COUNT(*)\r\n" + //
 				"from usuarios u\r\n" + //
 				"join PARTICIPANTES p on p.FK_USUARIO= u.ID_USUARIO\r\n" + //
 				"join ACTIVIDADES a on a.ID_ACTIVIDAD = p.FK_ACTIVIDAD\r\n" + //
 				"group by a.ID_ACTIVIDAD\r\n" + //
 				"having a.ID_ACTIVIDAD = :idActividad;"),
-		@NamedNativeQuery(name = "Actividades.newActivity", query = "INSERT INTO ACTIVIDADES "
-				+ " SET DEPORTE_FK")
+		@NamedNativeQuery(
+				name = "Actividades.createActividad", 
+				query = "INSERT INTO ACTIVIDADES A ( FK_USUARIO, FK_DEPORTE, FK_INSTALACION, FECHA, COMENTARIOS) "
+					+ " VALUES (:idUsuario, :idDeporte, :idInstalacion, :fecha, :comentarios);"),
+		@NamedNativeQuery(
+				name = "Actividades.updateTimestampActividad", 
+				query = "UPDATE ACTIVIDADES SET FECHA = :nuevaFecha WHERE id_actividad = :idActividad"),
+		@NamedNativeQuery(
+				name = "Actividades.updateTimestampActividad", 
+				query = "DELETE FROM ACTIVIDADES WHERE id_actividad = :idActividad")
 })
 public class Actividad implements Serializable {
 	private static final long serialVersionUID = -6567297175530353288L;

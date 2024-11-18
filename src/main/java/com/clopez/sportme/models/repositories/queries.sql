@@ -40,13 +40,18 @@ join ACTIVIDADES a on a.ID_ACTIVIDAD = p.FK_ACTIVIDAD
 group by a.ID_ACTIVIDAD
 having a.ID_ACTIVIDAD = :idActividad;
 
--- createActivity
+-- createActividad
 INSERT INTO ACTIVIDADES A ( FK_USUARIO, FK_DEPORTE, FK_INSTALACION, FECHA, COMENTARIOS)
 VALUES (:idUsuario, :idDeporte, :idInstalacion, :fecha, :comentarios);
 
 
 
 --------------- USERS ------------------
+-- getDataUsuarioById
+select u.apodo, u.nombre, u.apellido1, u.apellido2, c.correo from USUARIOS U 
+join CORREOS c on c.fk_usuario = u.id_usuario
+where u.id_usuario = :idUsuario;
+
 
 -- getAllUsers
 select * from USUARIOS;
@@ -76,6 +81,9 @@ where c.FK_USUARIO = (select id_usuario from USUARIOS where apodo= LOWER(:apodo)
 select c.correo from CORREOS c
 where c.FK_USUARIO = :idUsuario ;
 
+-- newUsuario
+INSERT INTO USUARIOS (apodo, nombre, APELLIDO1, APELLIDO2)
+VALUES (:apodo, :nombre, :apellido1, :apellido2);
 
 -- getParticipantNicks
 select u.APODO
@@ -100,7 +108,7 @@ values (:idUsuario, :correo);
 
 
 
----- getDireccionInstalaciones
+---- getDireccionInstalacion
 select i.TIPO_VIA, i.NOMBRE_VIA, i.NUM_VIA
 from INSTALACIONES i where i.ID_INSTALACION=:idInstalacion;
 
