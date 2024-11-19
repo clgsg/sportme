@@ -8,9 +8,9 @@ import com.clopez.sportme.models.Correo;
 
 
 public interface RepoCorreos extends JpaRepository<Correo, Integer> {
-        Correo getCorreoByIdUsuario(@Param("idUsuario") int idUsuario);
-        void addCorreoUsuario(@Param("idUsuario") int idUsuario, @Param("correo") String correo);
-        void updateCorreoUsuario(@Param("idUsuario") int idUsuario, @Param("nuevoCorreo") String nuevoCorreo);    
+        String getCorreoByIdUsuario(@Param("idUsuario") int idUsuario);
+        
+        void updateCorreoUsuario(@Param("idUsuario") int idUsuario, @Param("nuevoCorreo") String nuevoCorreo);
 }
 
 

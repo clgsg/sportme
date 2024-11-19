@@ -68,6 +68,16 @@ import jakarta.validation.constraints.Size;
 				+ "or a.fk_usuario= (select id_usuario from usuarios where apodo = :apodo) "
 				+ "and a.FECHA > SYSDATE; "),
 		@NamedNativeQuery(
+				name = "Actividades.getActividadesWhereUsuarioParticipante", 
+				query = "select d.DEPORTE, a.FECHA, i.NOMBRE "
+				+ " from ACTIVIDADES a  "
+				+ " JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE "
+				+ " join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION "
+				+ " join PARTICIPANTES p on p.FK_ACTIVIDAD = a.ID_ACTIVIDAD "
+				+ " join USUARIOS u on p.fk_usuario = u.id_usuario "
+				+ " where p.fk_usuario = :idUsuario "
+				+ " and a.FECHA > sysdate;"), 
+		@NamedNativeQuery(
 				name = "Actividades.getParticipantNicks", 
 				query = "select u.APODO from usuarios u "
 				+ "join PARTICIPANTES p on p.FK_USUARIO= u.ID_USUARIO "

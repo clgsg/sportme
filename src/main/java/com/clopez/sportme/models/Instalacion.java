@@ -24,8 +24,15 @@ import jakarta.persistence.Table;
 ),
 @NamedNativeQuery(
 	name="Instalaciones.getDireccionInstalacion",
-	query = "sselect i.TIPO_VIA, i.NOMBRE_VIA, i.NUM_VIA\r\n" + //
+	query = "select i.TIPO_VIA, i.NOMBRE_VIA, i.NUM_VIA\r\n" + //
 				"from INSTALACIONES i where i.ID_INSTALACION=:idInstalacion;"
+),
+@NamedNativeQuery(
+	name="Instalaciones.getInfoCompletaInstalacionById",
+	query = "select i.NOMBRE, i.TIPO_VIA || ' ' || i.NOMBRE_VIA   || ' ' || i.NUM_VIA as dirección, ti.TIPO, i.ALUMBRADO "
+	+ " FROM INSTALACIONES i "
+	+ " JOIN TIPOS_INSTALACION ti on ti.ID_TIPO = I.FK_TIPO_INSTALACION "
+	+ " WHERE I.ID_INSTALACION = :idInstalacion;" 
 )
 })
 public class Instalacion implements Serializable {

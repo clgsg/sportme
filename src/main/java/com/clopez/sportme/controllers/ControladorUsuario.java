@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.clopez.sportme.models.repositories.RepoActividades;
 import com.clopez.sportme.models.repositories.RepoUsuarios;
 
 
@@ -14,7 +13,6 @@ import com.clopez.sportme.models.repositories.RepoUsuarios;
 @RequestMapping("/usr")
 public class ControladorUsuario {
     @Autowired RepoUsuarios repoUsuarios;
-    @Autowired RepoActividades repoActividades;
 
     @RequestMapping("/")
     public String redirectToHome(){
@@ -28,10 +26,30 @@ public class ControladorUsuario {
     }
 
     @RequestMapping("/account.jsp")
-    public String verDatos(int idUsuario){
-        this.repoUsuarios.verDatosUsuario();
+    public String getDataUsuarioById(int idUsuario){
+        this.repoUsuarios.getDataUsuarioById(idUsuario);
         return "usr/account";
     }
+    
+//    @RequestMapping("/add.jsp")
+    public String getUserNameById(int idUsuario) {
+        return this.repoUsuarios.getUserNameById(idUsuario);
+    }
 
-
+//    @RequestMapping("/add.jsp")
+    public String getApodoByIdUsuario(int idUsuario) {
+        return this.repoUsuarios.getApodoByIdUsuario(idUsuario);
+    }
+    
+    @RequestMapping("/add.jsp")
+    public void newUsuario(String apodo, String nombre, String apellido1, String apellido2){
+        this.repoUsuarios.newUsuario( apodo, nombre, apellido1, apellido2);
+    }
+    
+    
+    @RequestMapping("/remove.jsp")
+    public void removeUsuario(int idUsuario){
+        this.repoUsuarios.removeUsuario(idUsuario);
+    }
+    
 }

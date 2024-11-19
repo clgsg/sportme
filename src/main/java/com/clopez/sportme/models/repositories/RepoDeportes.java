@@ -11,7 +11,7 @@ import com.clopez.sportme.models.Deporte;
 
 public interface RepoDeportes extends JpaRepository<Deporte, Integer> {
         List<Deporte> getAllDeportes();
-        Deporte getDeporteById(@Param("idDeporte") int idDeporte);
+        String getDeporteById(@Param("idDeporte") int idDeporte);
     }
 
 

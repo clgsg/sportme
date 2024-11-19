@@ -32,6 +32,16 @@ where a.fk_usuario = :idUsuario
 or a.fk_usuario= (select id_usuario from USUARIOS where apodo= :apodo)
 and a.FECHA > sysdate;
 
+-- getActividadesWhereUsuarioParticipante
+select d.DEPORTE, a.FECHA, i.NOMBRE 
+from ACTIVIDADES a 
+JOIN DEPORTES d on d.ID_DEPORTE= a.FK_DEPORTE
+join INSTALACIONES i on i.ID_INSTALACION = a.FK_INSTALACION
+join PARTICIPANTES p on p.FK_ACTIVIDAD = a.ID_ACTIVIDAD
+join USUARIOS u on p.fk_usuario = u.id_usuario
+where p.fk_usuario = :idUsuario
+and a.FECHA > sysdate;
+
 -- countParticipants
 select COUNT(*)
 from usuarios u
@@ -114,3 +124,10 @@ from INSTALACIONES i where i.ID_INSTALACION=:idInstalacion;
 
 
 select tipo from TIPOS_INSTALACION where id_tipo=:idTipoInstalacion;
+
+
+-- getInfoCompletaInstalacionById
+select i.NOMBRE, i.TIPO_VIA || ' ' || i.NOMBRE_VIA   || ' ' || i.NUM_VIA as dirección, ti.TIPO, i.ALUMBRADO
+FROM INSTALACIONES i
+JOIN TIPOS_INSTALACION ti on ti.ID_TIPO = I.FK_TIPO_INSTALACION
+WHERE I.ID_INSTALACION = :idInstalacion;

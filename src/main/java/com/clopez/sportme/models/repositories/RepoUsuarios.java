@@ -12,8 +12,8 @@ import com.clopez.sportme.models.Usuario;
 
 public interface RepoUsuarios extends JpaRepository<Usuario, Integer> {
         Usuario getDataUsuarioById(@Param("idUsuario") int idUsuario);
-        Usuario getApodoByIdUsuario(@Param("idUsuario") int idUsuario);
-        Usuario getUserNameById(@Param("idUsuario") int idUsuario);
+        String getApodoByIdUsuario(@Param("idUsuario") int idUsuario);
+        String getUserNameById(@Param("idUsuario") int idUsuario);
         List<Actividad> getActividadesCreatedByUsuario(@Param("idUsuario") int idUsuario);
 
         void newUsuario(@Param("apodo") String apodo, @Param("nombre") String nombre,

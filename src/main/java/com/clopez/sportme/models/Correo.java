@@ -55,7 +55,6 @@ public class Correo implements Serializable {
 		this.idCorreo = idCorreo;
 		this.idUsuario = idUsuario;
 		this.correo = correo;
-		this.usuario = usuario;
 	}
 
 	public static long getSerialversionuid() {
@@ -86,13 +85,6 @@ public class Correo implements Serializable {
 		this.correo = correo;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	@Override
 	public int hashCode() {
@@ -101,7 +93,6 @@ public class Correo implements Serializable {
 		result = prime * result + idCorreo;
 		result = prime * result + idUsuario;
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -123,18 +114,12 @@ public class Correo implements Serializable {
 				return false;
 		} else if (!correo.equals(other.correo))
 			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Correo [idCorreo=" + idCorreo + ", idUsuario=" + idUsuario + ", correo=" + correo + ", usuario="
-				+ usuario + "]";
+		return "Correo [idCorreo=" + idCorreo + ", idUsuario=" + idUsuario + ", correo=" + correo + " + ]";
 	}
 
 }
