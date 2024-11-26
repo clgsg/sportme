@@ -11,7 +11,7 @@ import com.clopez.sportme.models.repositories.RepoDeportes;
 @Controller
 // @RequestMapping("????")
 public class ControladorDeportes {
-    @Autowired RepoDeportes repoDeportes;
+    @Autowired private RepoDeportes repoDeportes;
 
     public List<Deporte> getAllDeportes(){
         return this.repoDeportes.getAllDeportes();

@@ -10,7 +10,7 @@ import com.clopez.sportme.models.repositories.RepoCorreos;
 @Controller
 @RequestMapping("/usr")
 public class ControladorCorreo {
-    @Autowired RepoCorreos repoCorreos;
+    @Autowired private RepoCorreos repoCorreos;
 
     @RequestMapping("/correo.jsp")
     public String getCorreoByIdUsuario(int idUsuario){

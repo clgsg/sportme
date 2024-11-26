@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.clopez.sportme.models.Actividad;
 import com.clopez.sportme.models.Usuario;
 
-
+@Repository
 public interface RepoUsuarios extends JpaRepository<Usuario, Integer> {
         Usuario getDataUsuarioById(@Param("idUsuario") int idUsuario);
         String getApodoByIdUsuario(@Param("idUsuario") int idUsuario);

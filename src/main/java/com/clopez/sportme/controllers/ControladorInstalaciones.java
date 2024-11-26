@@ -11,7 +11,7 @@ import com.clopez.sportme.models.repositories.RepoInstalaciones;
 @Controller
 public class ControladorInstalaciones {
     
-    @Autowired RepoInstalaciones repoInstalaciones;
+    @Autowired private RepoInstalaciones repoInstalaciones;
 
     List<Instalacion> getAllInstalaciones(){
         return this.repoInstalaciones.getAllInstalaciones();

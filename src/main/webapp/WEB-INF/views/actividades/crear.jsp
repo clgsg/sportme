@@ -35,21 +35,21 @@
     <nav>
       <ul>
           <li>
-            <a href="/index.html"> 
+            <a href="/index.jsp"> 
              <object type="image/svg+xml" data="/src/salir.svg" class="lightIcon" alt="salir de la aplicación" style="pointer-events: none;">
               </object>
             </a>
               </li>
           </li>
           <li>
-            <a href="/views/actividades/buscar.html">
+            <a href="/views/actividades/buscar.jsp">
               <object type="image/svg+xml" data="/src/search.svg" class="lightIcon" alt="Buscar actividades" style="pointer-events: none;">
                 
               </object>
               
           
           </a></li>
-              <li><a href="/views/usuarios/private/ver.html">
+              <li><a href="/views/usuarios/private/ver.jsp">
                   <object type="image/svg+xml" data="/src/account.svg" class="lightIcon"  style="pointer-events: none;"></object>
                 </a>
               
@@ -170,7 +170,7 @@
           </tr>
           <tr>
             <td>
-                <a href="/views/actividades/mostrar.html">
+                <a href="/views/actividades/mostrar.jsp">
                 <button class="darkButton">Crear actividad</button>
             </a>
             </td>

@@ -149,7 +149,7 @@
           </tr>
           <tr>
             <td>
-              <a href="/views/actividades/buscar.html">
+              <a href="/views/actividades/buscar.jsp">
                 <button class="darkButton" type="submit">Registrame</button>
               </a>
             </td>

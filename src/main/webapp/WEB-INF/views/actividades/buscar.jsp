@@ -63,7 +63,7 @@
           </tr>
           <tr>
             <td>
-              <a href="/views/actividades/mostrar.html" target="_self">
+              <a href="/views/actividades/mostrar.jsp" target="_self">
                 <button class="darkButton">Buscar actividades</button>
               </a>
             </td>

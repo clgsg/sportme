@@ -11,18 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.clopez.sportme.models.Actividad;
 import com.clopez.sportme.models.repositories.RepoActividades;
-import com.clopez.sportme.models.repositories.RepoDeportes;
-import com.clopez.sportme.models.repositories.RepoInstalaciones;
-import com.clopez.sportme.models.repositories.RepoUsuarios;
 
 @Controller
 @RequestMapping("/act")
 public class ControladorActividad {
     
-    @Autowired RepoActividades repoActividades;
-    @Autowired RepoUsuarios repoUsuarios;
-    @Autowired RepoInstalaciones repoInstalaciones;
-    @Autowired RepoDeportes repoDeportes;
+    @Autowired private RepoActividades repoActividades;
+    //@Autowired private RepoUsuarios repoUsuarios;
+    //@Autowired private RepoInstalaciones repoInstalaciones;
+    //@Autowired private RepoDeportes repoDeportes;
 
     
 

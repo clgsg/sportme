@@ -32,21 +32,21 @@
     <nav>
         <ul>
             <li>
-              <a href="/index.html"> 
+              <a href="/index.jsp"> 
                <object type="image/svg+xml" data="/src/salir.svg" class="lightIcon" alt="salir de la aplicación" style="pointer-events: none;">
                 </object>
               </a>
                 </li>
             </li>
             <li>
-              <a href="/views/actividades/buscar.html">
+              <a href="/views/actividades/buscar.jsp">
                 <object type="image/svg+xml" data="/src/search.svg" class="lightIcon" alt="Buscar actividades" style="pointer-events: none;">
                   
                 </object>
                 
             
             </a></li>
-                <li><a href="/views/usuarios/private/ver.html">
+                <li><a href="/views/usuarios/private/ver.jsp">
                     <object type="image/svg+xml" data="/src/account.svg" class="lightIcon"  style="pointer-events: none;"></object>
                   </a>
                 
@@ -61,7 +61,7 @@
     <br>
     
 </main>
-<button class="darkButton"><a href="/views/actividades/crear.html">Crear actividad</a></button>
+<button class="darkButton"><a href="/views/actividades/crear.jsp">Crear actividad</a></button>
 
 <footer class="footer">
 

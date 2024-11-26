@@ -3,7 +3,7 @@
 <nav>
     <ul>
       <li>
-        <a href="/index.html"><s:message code="nav.saludo"/>
+        <a href="/index.jsp"><s:message code="nav.saludo"/>
           <object
             type="image/svg+xml"
             data="/src/main/webapp/icon/salir.svg"
@@ -14,7 +14,7 @@
         </a>
       </li>
       <li>
-        <a href="/views/actividades/buscar.html"><s:message code="nav.buscar"/>
+        <a href="/views/actividades/buscar.jsp"><s:message code="nav.buscar"/>
           <object
             type="image/svg+xml"
             data="/src/main/webapp/icon/search.svg"
@@ -25,7 +25,7 @@
         </a>
       </li>
       <li>
-        <a href="/views/usuarios/private/ver.html"><s:message code="nav.ver"/>
+        <a href="/views/usuarios/private/ver.jsp"><s:message code="nav.ver"/>
           <object
             type="image/svg+xml"
             data="/src/main/webapp/icon/account.svg"

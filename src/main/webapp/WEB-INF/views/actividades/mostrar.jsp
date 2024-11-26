@@ -34,7 +34,7 @@
     <nav>
       <ul>
         <li>
-          <a href="/index.html">
+          <a href="/index.jsp">
             <object
               type="image/svg+xml"
               data="/src/salir.svg"
@@ -45,7 +45,7 @@
           </a>
         </li>
         <li>
-          <a href="/views/actividades/buscar.html">
+          <a href="/views/actividades/buscar.jsp">
             <object
               type="image/svg+xml"
               data="/src/search.svg"
@@ -56,7 +56,7 @@
           </a>
         </li>
         <li>
-          <a href="/views/usuarios/private/ver.html">
+          <a href="/views/usuarios/private/ver.jsp">
             <object
               type="image/svg+xml"
               data="/src/account.svg"

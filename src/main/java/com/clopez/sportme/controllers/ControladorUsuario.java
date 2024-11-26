@@ -12,11 +12,11 @@ import com.clopez.sportme.models.repositories.RepoUsuarios;
 @Controller
 @RequestMapping("/usr")
 public class ControladorUsuario {
-    @Autowired RepoUsuarios repoUsuarios;
+    @Autowired private RepoUsuarios repoUsuarios;
 
     @RequestMapping("/")
     public String redirectToHome(){
-        return "redirect:/index.html";
+        return "redirect:/index.jsp";
     }
     
 
