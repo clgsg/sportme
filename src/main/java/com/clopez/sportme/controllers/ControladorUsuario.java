@@ -2,15 +2,17 @@ package com.clopez.sportme.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.clopez.sportme.models.repositories.RepoUsuarios;
 
 
-@Controller
-@RequestMapping("/usr")
+@RestController
 public class ControladorUsuario {
     @Autowired private RepoUsuarios repoUsuarios;
 
@@ -25,7 +27,7 @@ public class ControladorUsuario {
         return "common/error";
     }
 
-    @RequestMapping("/account.jsp")
+    @GetMapping("/user/account")
     public String getDataUsuarioById(int idUsuario){
         this.repoUsuarios.getDataUsuarioById(idUsuario);
         return "usr/account";
@@ -41,13 +43,13 @@ public class ControladorUsuario {
         return this.repoUsuarios.getApodoByIdUsuario(idUsuario);
     }
     
-    @RequestMapping("/add.jsp")
+    @PostMapping("/usr/new")
     public void newUsuario(String apodo, String nombre, String apellido1, String apellido2){
         this.repoUsuarios.newUsuario( apodo, nombre, apellido1, apellido2);
     }
     
     
-    @RequestMapping("/remove.jsp")
+    @DeleteMapping("/usr/remove")
     public void removeUsuario(int idUsuario){
         this.repoUsuarios.removeUsuario(idUsuario);
     }
