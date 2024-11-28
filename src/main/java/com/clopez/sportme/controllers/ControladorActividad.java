@@ -4,16 +4,19 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.clopez.sportme.models.Actividad;
 import com.clopez.sportme.models.repositories.RepoActividades;
 
-@Controller
-@RequestMapping("/act")
+@RestController
 public class ControladorActividad {
     
     @Autowired private RepoActividades repoActividades;
@@ -21,54 +24,57 @@ public class ControladorActividad {
     //@Autowired private RepoInstalaciones repoInstalaciones;
     //@Autowired private RepoDeportes repoDeportes;
 
-    
-
-    @ExceptionHandler(DataAccessException.class)
-    public String errorDeDatos(){
-        return "common/error";
+    ControladorActividad(RepoActividades repoActividades){
+        this.repoActividades=repoActividades;
     }
 
-    @RequestMapping("/viewall.jsp")
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String noEncontrado(RuntimeException e){
+        return e.getMessage();
+    }
+
+    @GetMapping("/actividades")
     public List<Actividad> getAllActividades(){
         return this.repoActividades.getAllActividades();
     }
-    @RequestMapping("/search.jsp")
+    @GetMapping("/actividades/{deporte}/{fecha}")
     public List<Actividad> getActividadesByTypeAndDate(String deporte, Timestamp fecha ){
         return this.repoActividades.getActividadesByTypeAndDate(deporte, fecha);
     }
-    @RequestMapping("/search.jsp")
+    @GetMapping("/actividades/{deporte}")
     public List<Actividad> getActividadesByType(String deporte){
         return this.repoActividades.getActividadesByType(deporte);
     }
-    @RequestMapping("/search.jsp")
+    @GetMapping("/actividades/{fecha}")
     public List<Actividad> getActividadesByDate(Timestamp fecha){
         return this.repoActividades.getActividadesByDate(fecha);
     }
-    @RequestMapping("/creadas.jsp")
+    @GetMapping("/actividades/creadas_por_{idUsuario}")
     public List<Actividad> getActividadesCreatedByUser(int idUsuario){
         return this.repoActividades.getActividadesCreatedByUser(idUsuario);
     }
-    @RequestMapping("/inscrito.jsp")
+    @GetMapping("/actividades/{idUsuario}_inscrito")
     public List<Actividad> getActividadesWhereUsuarioParticipante(int idUsuario){
         return this.repoActividades.getActividadesWhereUsuarioParticipante(idUsuario);
     }
-    @RequestMapping("/details.jsp")
+    @GetMapping("/actividades/{idActividad}")
     public Actividad getActividadById(int idActividad){
         return this.repoActividades.getActividadById(idActividad);
     }
-    @RequestMapping("/details.jsp")
+
     public Integer countParticipantsByIdActividad(int idActividad){
         return this.repoActividades.countParticipantsByIdActividad(idActividad);
     }
-    @RequestMapping("/nueva.jsp")
+    @PostMapping("/actividades/nueva")
     public void createActividad(int idUsuario, int idDeporte, int idInstalacion, Timestamp fecha, String comentarios){
         this.repoActividades.createActividad(idUsuario, idDeporte, idInstalacion, fecha, comentarios);
     }
-    @RequestMapping("/update.jsp")
+    @PutMapping("/actividades/update/{idActividad}")
     public void updateActividad(int idActividad, Timestamp fecha, String comentarios){
         this.repoActividades.updateActividad(idActividad, fecha, comentarios);
     }
-    @RequestMapping("/remove.jsp")
+    @DeleteMapping("/actividades/remove/{idActividad}")
     public void removeActividad(int idActividad){
         this.repoActividades.removeActividad(idActividad);
     }

@@ -1,10 +1,12 @@
 package com.clopez.sportme.models;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,8 +22,6 @@ import jakarta.persistence.NamedNativeQueries;
 import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -131,12 +131,11 @@ public class Actividad implements Serializable {
 	private String comentarios;
 
 	@Column(name = "fecha", nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Date fechaActividad;
+	@DateTimeFormat
+	private LocalDate fechaActividad;
 
 	@Column(name = "fecha", nullable = false)
-	@Temporal(TemporalType.TIME)
-	private Time horaActividad;
+	private LocalTime horaActividad;
 
 	@ManyToOne
 	@JoinColumn(name = "id_instalacion")
@@ -161,7 +160,7 @@ public class Actividad implements Serializable {
 
 	// Constructor with all possible arguments
 	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, int minParticipantes,
-			int maxParticipantes, @Size(max = 400) String comentarios, Date fechaActividad, Time horaActividad,
+			int maxParticipantes, @Size(max = 400) String comentarios, LocalDate fechaActividad, LocalTime horaActividad,
 			Instalacion instalacion, Deporte deporte, Usuario creador) {
 		this.idActividad = idActividad;
 		this.usuarioCreadorFk = usuarioCreadorFk;
@@ -178,8 +177,8 @@ public class Actividad implements Serializable {
 	}
 
 	// Constructor with only mandatory arguments
-	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, Date fechaActividad,
-			Time horaActividad) {
+	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, LocalDate fechaActividad,
+			LocalTime horaActividad) {
 		this.idActividad = idActividad;
 		this.usuarioCreadorFk = usuarioCreadorFk;
 		this.deporteFk = deporteFk;
@@ -190,7 +189,7 @@ public class Actividad implements Serializable {
 
 	// Constructor with mandatory arguments + no.participants
 	public Actividad(int idActividad, int usuarioCreadorFk, int deporteFk, int instalacionFk, int minParticipantes,
-		int maxParticipantes, Date fechaActividad, Time horaActividad) {
+		int maxParticipantes, LocalDate fechaActividad, LocalTime horaActividad) {
 			this.idActividad = idActividad;
 			this.usuarioCreadorFk = usuarioCreadorFk;
 			this.deporteFk = deporteFk;
@@ -258,19 +257,19 @@ public class Actividad implements Serializable {
 		this.comentarios = comentarios;
 	}
 
-	public Date getFechaActividad() {
+	public LocalDate getFechaActividad() {
 		return fechaActividad;
 	}
 
-	public void setFechaActividad(Date fechaActividad) {
+	public void setFechaActividad(LocalDate fechaActividad) {
 		this.fechaActividad = fechaActividad;
 	}
 
-	public Time getHoraActividad() {
+	public LocalTime getHoraActividad() {
 		return horaActividad;
 	}
 
-	public void setHoraActividad(Time horaActividad) {
+	public void setHoraActividad(LocalTime horaActividad) {
 		this.horaActividad = horaActividad;
 	}
 
