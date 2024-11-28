@@ -3,12 +3,12 @@ package com.clopez.sportme.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.clopez.sportme.models.Instalacion;
 import com.clopez.sportme.models.repositories.RepoInstalaciones;
 
-@Controller
+@RestController
 public class ControladorInstalaciones {
     
     @Autowired private RepoInstalaciones repoInstalaciones;

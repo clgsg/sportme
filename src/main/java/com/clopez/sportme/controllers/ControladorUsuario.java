@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.clopez.sportme.models.Usuario;
 import com.clopez.sportme.models.repositories.RepoUsuarios;
 
 
@@ -27,18 +29,15 @@ public class ControladorUsuario {
         return "common/error";
     }
 
-    @GetMapping("/user/account")
-    public String getDataUsuarioById(int idUsuario){
-        this.repoUsuarios.getDataUsuarioById(idUsuario);
-        return "usr/account";
+    @GetMapping("/usr/account/{idUsuario}")
+    public Usuario getDataUsuarioById(@RequestParam(value="idUsuario") int idUsuario){
+        return this.repoUsuarios.getDataUsuarioById(idUsuario);
     }
     
-//    @RequestMapping("/add.jsp")
     public String getUserNameById(int idUsuario) {
         return this.repoUsuarios.getUserNameById(idUsuario);
     }
 
-//    @RequestMapping("/add.jsp")
     public String getApodoByIdUsuario(int idUsuario) {
         return this.repoUsuarios.getApodoByIdUsuario(idUsuario);
     }
