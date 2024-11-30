@@ -1,0 +1,1 @@
+document.getElementById("apodo").value;

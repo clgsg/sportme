@@ -20,7 +20,7 @@ public class ControladorUsuario {
 
     @RequestMapping("/")
     public String redirectToHome(){
-        return "redirect:/index.jsp";
+        return "redirect:/index.html";
     }
     
 
